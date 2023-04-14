@@ -29,6 +29,7 @@ internal class Program
                     new MongoController().InsertBook(bookToSave);
 
                     Console.WriteLine("Livro Armazenado!");
+                    Console.WriteLine("Pressione enter para continuar...");
                     Console.ReadKey();
                     Console.Clear();
 
@@ -40,6 +41,7 @@ internal class Program
                     new MongoController().ReadBook(bookNameToRead);
 
                     Console.WriteLine("Livro adicionado a lista de leitura!");
+                    Console.WriteLine("Pressione enter para continuar...");
                     Console.ReadKey();
                     Console.Clear();
 
@@ -51,21 +53,23 @@ internal class Program
                     new MongoController().LendBook(bookNameToLead);
 
                     Console.WriteLine("Livro adicionado a lista de emprestados!");
+                    Console.WriteLine("Pressione enter para continuar...");
                     Console.ReadKey();
                     Console.Clear();
 
                     break;
                 case 4:
-                    int opc = MenuCollections();
+                    int opmc = MenuCollections();
                     Console.Write("Informe o nome do livro: ");
                     string bookNameToShelf = Console.ReadLine();
 
-                    switch (opc)
+                    switch (opmc)
                     {
                         case 1:
                             new MongoController().ReadingToShelf(bookNameToShelf);
 
                             Console.WriteLine("Livro devolvido para a prateleira!");
+                            Console.WriteLine("Pressione enter para continuar...");
                             Console.ReadKey();
                             Console.Clear();
 
@@ -74,6 +78,7 @@ internal class Program
                             new MongoController().LendToShelf(bookNameToShelf);
 
                             Console.WriteLine("Livro devolvido para a prateleira!");
+                            Console.WriteLine("Pressione enter para continuar...");
                             Console.ReadKey();
                             Console.Clear();
 
@@ -85,18 +90,37 @@ internal class Program
                     }
                     break;
                 case 5:
-                    new ShelfController().InsertBookList(new MongoController().ShowShelfBooks());
+
+                    int opml = MenuList();
+
+                    switch (opml)
+                    {
+                        case 1:
+                            new ShelfController().InsertBookList(new MongoController().ShowShelfBooks());
+                            Console.WriteLine("Pressione enter para continuar...");
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        case 2:
+                            new ShelfController().InsertReadingList(new MongoController().ShowReadingBooks());
+                            Console.WriteLine("Pressione enter para continuar...");
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        case 3:
+                            new ShelfController().InsertLoanedList(new MongoController().ShowLoanedBooks());
+                            Console.WriteLine("Pressione enter para continuar...");
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        default:
+                            Console.WriteLine("Escolha uma opção valida!");
+
+                            break;
+                    }
 
                     break;
                 case 6:
-                    new ShelfController().InsertReadingList(new MongoController().ShowReadingBooks());
-
-                    break;
-                case 7:
-                    new ShelfController().InsertLoanedList(new MongoController().ShowLoanedBooks());
-
-                    break;
-                case 8:
                     Console.WriteLine("------Atualizar livro da prateleira------");
                     Console.Write("Nome do livro que você deseja atualizar: ");
                     string bookNameToUpdate = Console.ReadLine();
@@ -112,13 +136,14 @@ internal class Program
                     new MongoController().UpdateBook(bookNameToUpdate, field, value);
 
                     break;
-                case 9:
+                case 7:
                     Console.Write("Informe o nome do livro: ");
                     string bookNameToDelete = Console.ReadLine();
 
                     new MongoController().DeleteBook(bookNameToDelete);
 
                     Console.WriteLine("Livro excluido!");
+                    Console.WriteLine("Pressione enter para continuar...");
                     Console.ReadKey();
                     Console.Clear();
 
@@ -138,10 +163,8 @@ internal class Program
                              $"\n3 - Emprestar livro" +
                              $"\n4 - Devovler livro para a prateleira" +
                              $"\n5 - Listar livros" +
-                             $"\n6 - Listar livros que está lendo" +
-                             $"\n7 - Listar livros emprestados" +
-                             $"\n8 - Atualizar livro" +
-                             $"\n9 - Excluir livro" +
+                             $"\n6 - Atualizar livro" +
+                             $"\n7 - Excluir livro" +
                              $"\n0 - Sair" +
                              "\n-----------------------");
 
@@ -153,6 +176,17 @@ internal class Program
         Console.WriteLine($"----ESTANTE VIRTUAL----" +
                              $"\n1 - Remover da lista de leitura" +
                              $"\n2 - Remover da lista de emprestados" +
+                             "\n-----------------------");
+
+        return int.Parse(Console.ReadLine());
+    }
+
+    public static int MenuList()
+    {
+        Console.WriteLine($"----Listar estantes----" +
+                             $"\n1 - Listar livros" +
+                             $"\n2 - Listar livros que está lendo" +
+                             $"\n3 - Listar livros emprestados" +
                              "\n-----------------------");
 
         return int.Parse(Console.ReadLine());
